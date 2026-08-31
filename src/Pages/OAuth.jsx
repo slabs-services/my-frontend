@@ -1,19 +1,14 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import AlertBox from "../Components/Alert";
 import { updateAlert } from "../Utils";
+import PageWrapper from "../Components/PageWrapper";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuthContext } from "../Contexts/AuthContext";
 
 export default function OAuth() {
     const location = useLocation();
     const navigate = useNavigate();
-    
-    const [isLoading, setIsLoading] = useState(true);
-    const [alert, setAlert] = useState({
-        showAlert: false,
-        severity: 0,
-        message: "",
-        hideContent: true
-    });
+    const { alert, isLoading, setAlert, setIsLoading } = useAuthContext();
 
     useEffect(() => {
         async function validateCode() {
@@ -82,24 +77,9 @@ export default function OAuth() {
     }, []);
 
     return(
-        <div className="bg-gray-50 w-full h-full absolute flex items-center flex-col font-roboto">
-            { isLoading ? <div className="w-full h-full absolute bg-black/50 flex items-center justify-center">
-                <img src="/loading.svg" title="Loading" alt="Loading" className="w-16 animate-spin" />
-            </div> : null }
-            <div className="bg-[#252f3d] w-full p-3 flex justify-center">
-                <div className="w-2/3">
-                    <img src="/logo-big.svg" title="Logo" alt="Logo" className="h-6" />
-                </div>
-            </div>
-            <div className="w-full p-3 flex justify-center">
-                <div className="w-2/3">
-                    <AlertBox alert={alert} />
-                    { !alert.hideContent ?
-                    <>
-                        <h1 className="text-3xl font-bold text-zinc-700">We will redirect you in a moment</h1>
-                    </> : null }
-                </div>
-            </div>
-        </div>
+        <PageWrapper ignoreLocalAuth={true}>
+            <AlertBox alert={alert} />
+            { !alert.hideContent ? <h1 className="text-3xl font-bold text-zinc-700">We will redirect you in a moment</h1> : null }
+        </PageWrapper>
     );
 }
