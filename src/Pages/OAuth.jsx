@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { FaPowerOff, FaGear } from "react-icons/fa6";
 import AlertBox from "../Components/Alert";
-import { updateAlert, GetMYAccountClient } from "../Utils";
+import { updateAlert } from "../Utils";
+import { useLocation, useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function OAuth() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    
     const [isLoading, setIsLoading] = useState(true);
-    const [name, setName] = useState("");
     const [alert, setAlert] = useState({
         showAlert: false,
         severity: 0,
@@ -14,14 +16,26 @@ export default function Home() {
     });
 
     useEffect(() => {
-        async function getUserInfo(){
+        async function validateCode() {
+            const searchParams = new URLSearchParams(location.search);
+
+            if(!searchParams.has("code")){
+                setIsLoading(false);
+                updateAlert(setAlert, "severity", 3);
+                updateAlert(setAlert, "showAlert", true);
+                updateAlert(setAlert, "message", "Missing Code Parameter");
+                return;
+            }
+        
             try {
-                const getUserInfo = new URL(
-                    "/userInfo",
+                const oauthCheck = new URL(
+                    "/convertOAuthCode",
                     import.meta.env.VITE_MY_API_URL
                 );
 
-                const response = await fetch(getUserInfo, {
+                oauthCheck.searchParams.append('code', searchParams.get("code"));
+
+                const response = await fetch(oauthCheck, {
                     credentials: "include"
                 });
 
@@ -40,45 +54,41 @@ export default function Home() {
                 } catch (e) {
                     updateAlert(setAlert, "severity", 3);
                     updateAlert(setAlert, "showAlert", true);
-                    updateAlert(setAlert, "message", "Unknown Error");
+                    updateAlert(setAlert, "message", "Unknown Error.");
                     setIsLoading(false);
                     return;
                 }
 
                 if (!response.ok) {
-                    window.location.href = import.meta.env.VITE_AUTH_REDIRECT + "/?" + GetMYAccountClient();
+                    updateAlert(setAlert, "severity", data.severity);
+                    updateAlert(setAlert, "showAlert", true);
+                    updateAlert(setAlert, "message", data.message);
+                    updateAlert(setAlert, "hideContent", data.hideContent);
                     setIsLoading(false);
                     return;
                 }
 
-                setName(data.name);
                 updateAlert(setAlert, "hideContent", false);
-                setIsLoading(false);
+                navigate("/my");
             } catch (e) {
-                console.log(e);
                 updateAlert(setAlert, "severity", 3);
                 updateAlert(setAlert, "showAlert", true);
                 updateAlert(setAlert, "message", "Unable to connect to the my service.");
                 setIsLoading(false);
             }
         }
-        
-        getUserInfo();
+
+        validateCode();
     }, []);
 
-    return (
+    return(
         <div className="bg-gray-50 w-full h-full absolute flex items-center flex-col font-roboto">
             { isLoading ? <div className="w-full h-full absolute bg-black/50 flex items-center justify-center">
                 <img src="/loading.svg" title="Loading" alt="Loading" className="w-16 animate-spin" />
             </div> : null }
             <div className="bg-[#252f3d] w-full p-3 flex justify-center">
-                <div className="w-2/3 flex justify-between">
+                <div className="w-2/3">
                     <img src="/logo-big.svg" title="Logo" alt="Logo" className="h-6" />
-                    { !alert.hideContent ? <div className="flex gap-x-6 items-center">
-                        <FaGear className="w-4 h-4 text-white hover:opacity-80 hover:cursor-pointer" />
-                        <p className="text-white">{name}</p>
-                        <FaPowerOff className="w-4 h-4 text-white hover:opacity-80 hover:cursor-pointer" />
-                    </div> : null }
                 </div>
             </div>
             <div className="w-full p-3 flex justify-center">
@@ -86,7 +96,7 @@ export default function Home() {
                     <AlertBox alert={alert} />
                     { !alert.hideContent ?
                     <>
-                        <h1 className="text-3xl font-bold text-zinc-700">My Apps</h1>
+                        <h1 className="text-3xl font-bold text-zinc-700">We will redirect you in a moment</h1>
                     </> : null }
                 </div>
             </div>
