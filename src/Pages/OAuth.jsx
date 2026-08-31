@@ -3,12 +3,12 @@ import AlertBox from "../Components/Alert";
 import { updateAlert } from "../Utils";
 import PageWrapper from "../Components/PageWrapper";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuthContext } from "../Contexts/AuthContext";
+import { useComponentContext } from "../Contexts/ComponentContext";
 
 export default function OAuth() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { alert, isLoading, setAlert, setIsLoading } = useAuthContext();
+    const { alert, setAlert, setIsLoading } = useComponentContext();
 
     useEffect(() => {
         async function validateCode() {

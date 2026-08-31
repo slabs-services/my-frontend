@@ -1,9 +1,9 @@
 import AlertBox from "../Components/Alert";
-import { useAuthContext } from "../Contexts/AuthContext";
+import { useComponentContext } from "../Contexts/ComponentContext";
 import PageWrapper from "../Components/PageWrapper";
 
 export default function Apps() {
-    const { alert } = useAuthContext();
+    const { alert } = useComponentContext();
 
     return (
         <PageWrapper>

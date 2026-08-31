@@ -1,20 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useComponentContext } from "../Contexts/ComponentContext";
 import { updateAlert, GetMYAccountClient } from "../Utils";
 
 export default function useAuth(){
-    const [name, setName] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isInitialized, setIsInitialized] = useState(false);
-    const [alert, setAlert] = useState({
-        showAlert: false,
-        severity: 0,
-        message: "",
-        hideContent: true
+    const { setIsLoading, setAlert } = useComponentContext();
+
+    const [userInfo, setUserInfo] = useState({
+        name: "",
+        email: ""
     });
 
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
     async function getUserInfo(){
-        if(isInitialized){
+        if(isAuthenticated){
             return;
         }
         
@@ -57,11 +56,10 @@ export default function useAuth(){
                 return;
             }
 
-            setName(data.name);
+            setUserInfo(data);
             updateAlert(setAlert, "hideContent", false);
             setIsAuthenticated(true);
             setIsLoading(false);
-            setIsInitialized(true);
         } catch (e) {
             updateAlert(setAlert, "severity", 3);
             updateAlert(setAlert, "showAlert", true);
@@ -72,12 +70,8 @@ export default function useAuth(){
     }
 
     return {
-        name,
+        userInfo,
         getUserInfo,
-        setAlert,
-        alert,
-        isLoading,
-        isAuthenticated,
-        setIsLoading
+        isAuthenticated
     };
 }

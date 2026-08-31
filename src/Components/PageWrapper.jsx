@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { useAuthContext } from "../Contexts/AuthContext";
+import { useComponentContext } from "../Contexts/ComponentContext";
 import { FaPowerOff, FaGear } from "react-icons/fa6";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { getFirstLastName } from "../Utils";
 
 export default function PageWrapper({ children, ignoreLocalAuth = false }) {
-    const { getUserInfo, name, isLoading, isAuthenticated } = useAuthContext();
-    const navigate = useNavigate();
+    const { getUserInfo, userInfo, isAuthenticated } = useAuthContext();
+    const { isLoading } = useComponentContext();
 
     useEffect(() => {
         if(!ignoreLocalAuth){
@@ -21,8 +23,9 @@ export default function PageWrapper({ children, ignoreLocalAuth = false }) {
             <div className="bg-[#252f3d] w-full p-3 flex justify-center">
                 <div className="w-2/3 flex justify-between">
                     <img src="/logo-big.svg" title="Logo" alt="Logo" className="h-6" />
-                    { isAuthenticated ? <div className="flex gap-x-2 items-center">
-                        <p className="text-white opacity-80">{name}</p>
+                    { isAuthenticated ? <div className="flex gap-x-3 items-center">
+                        <p className="text-white opacity-80">{getFirstLastName(userInfo.name)}</p>
+                        <Link to="/my" className="text-white">My Apps</Link>
                         <Link to="/settings" className="text-white">Settings</Link>
                         <Link to="/" className="text-white">Log out</Link>
                     </div> : null }

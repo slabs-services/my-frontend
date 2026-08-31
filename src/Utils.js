@@ -8,9 +8,28 @@ export function GetMYAccountClient(){
     return params.toString();
 }
 
+export const updateValidation = (setValidations, key, value) => {
+    setValidations(prev =>
+        prev.map(item =>
+            item.field === key
+                ? { ...item, message: value }
+                : item
+        )
+    );
+};
+
 export const updateAlert = (setAlert, key, value) => {
     setAlert(prev => ({
         ...prev,
         [key]: value
     }));
 };
+
+export function getFirstLastName(name){
+    const nameSplit = name.split(" ");
+    if(nameSplit.length === 1){
+        return nameSplit[0];
+    }else{
+        return nameSplit[0] + " " + nameSplit[nameSplit.length-1];
+    }
+}
