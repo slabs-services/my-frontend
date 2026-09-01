@@ -1,82 +1,32 @@
 import AlertBox from "../Components/Alert";
 import { useComponentContext } from "../Contexts/ComponentContext";
-import { useAuthContext } from "../Contexts/AuthContext";
 import PageWrapper from "../Components/PageWrapper";
 import { updateAlert, updateValidation } from "../Utils";
 import { useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-export default function ChangeEmail() {
+export default function ChangePassword() {
     const navigate = useNavigate();
     const { alert, setIsLoading, setAlert } = useComponentContext();
-    const { userInfo } = useAuthContext();
-    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [repassword, setRepassword] = useState("");
     const [validations, setValidations] = useState([
         {
-            field: "email",
+            field: "password",
+            message: ""
+        },
+        {
+            field: "repassword",
             message: ""
         }
     ]);
 
     useEffect(() => {
-        async function GetPendingEmailChanges(){
-            updateAlert(setAlert, "hideContent", true);
-            updateAlert(setAlert, "showAlert", false);
-            setIsLoading(true);
-
-            try {
-                const pendingEmailChanges = new URL(
-                    "/pendingEmailChanges",
-                    import.meta.env.VITE_MY_API_URL
-                );
-
-                const response = await fetch(pendingEmailChanges, {
-                    credentials: "include"
-                });
-
-                if (response.status === 502) {
-                    updateAlert(setAlert, "severity", 3);
-                    updateAlert(setAlert, "showAlert", true);
-                    updateAlert(setAlert, "message", "My service is temporarily unavailable.");
-                    setIsLoading(false);
-                    return;
-                }
-
-                let data = null;
-
-                try {
-                    data = await response.json();
-                } catch (e) {
-                    updateAlert(setAlert, "severity", 3);
-                    updateAlert(setAlert, "showAlert", true);
-                    updateAlert(setAlert, "message", "Unknown Error");
-                    setIsLoading(false);
-                    return;
-                }
-
-                if (!response.ok) {
-                    updateAlert(setAlert, "severity", data.severity);
-                    updateAlert(setAlert, "showAlert", true);
-                    updateAlert(setAlert, "message", data.message);
-                    updateAlert(setAlert, "hideContent", data.hideContent);
-                    setIsLoading(false);
-                    return;
-                }
-
-                setEmail(userInfo.email);
-                updateAlert(setAlert, "hideContent", false);
-                setIsLoading(false);
-            } catch (e) {
-                updateAlert(setAlert, "severity", 3);
-                updateAlert(setAlert, "showAlert", true);
-                updateAlert(setAlert, "message", "Unable to connect to the my service.");
-                setIsLoading(false);
-            }
-        }
-
-        GetPendingEmailChanges();
-    }, [userInfo]);
+        updateAlert(setAlert, "hideContent", false);
+        updateAlert(setAlert, "showAlert", false);
+        setIsLoading(false);
+    }, []);
 
     async function handleSubmit(e){
         e.preventDefault();
@@ -85,20 +35,36 @@ export default function ChangeEmail() {
             updateValidation(setValidations, validation.field, "");
         });
 
-        const changeEmail = new URL(
-            "/changeEmail",
+        if(password.length < 8){
+            updateValidation(setValidations, "password", "Password must be 8+ characters");
+            setPassword('');
+            setRepassword('');
+            setIsLoading(false);
+            return;
+        }
+
+        if(password !== repassword){
+            updateValidation(setValidations, "repassword", "Passwords not match");
+            setPassword('');
+            setRepassword('');
+            setIsLoading(false);
+            return;
+        }
+
+        const changePassword = new URL(
+            "/changePassword",
             import.meta.env.VITE_MY_API_URL
         );
 
         try {
-            const response = await fetch(changeEmail, {
+            const response = await fetch(changePassword, {
                 method: 'POST',
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    email
+                    password
                 })
             });
 
@@ -157,19 +123,24 @@ export default function ChangeEmail() {
         <PageWrapper>
             <div className="flex items-center gap-x-4">
                 <FaArrowLeft className="w-6 h-6 text-zinc-700 hover:cursor-pointer" onClick={() => { navigate("/settings"); }} />
-                <h1 className="text-3xl font-bold text-zinc-700">Change Email</h1>
+                <h1 className="text-3xl font-bold text-zinc-700">Change Password</h1>
             </div>
             <div className="mt-6 w-125 gap-y-2 flex flex-col">
                 <AlertBox alert={alert} />
                 { !alert.hideContent ?
                     <form className="flex flex-col gap-y-4" onSubmit={handleSubmit}>
-                        <p>Do you want to change your email? Let's start</p>
+                        <p>Do you want to change your password? Let's start</p>
                         <div className="flex flex-col gap-y-1">
-                            <label htmlFor="email">New Email address</label>
-                            <input required type="email" id="email" placeholder="example@domain.com" autoComplete="email" autoCorrect="off" autoCapitalize="off" className="p-1 border rounded border-slate-400 outline-none focus:border-blue-600 text-slate-900" value={email} onChange={(e) => { clearFeedbackErrors(e.target.id); setEmail(e.target.value); }} />
-                            { validations.find((validation) => {return validation.field === "email"}).message !== "" ? <p className="text-red-600">{validations.find((validation) => {return validation.field === "email"}).message}</p> : null }
+                            <label htmlFor="password">Password</label>
+                            <input required type="password" id="password" autoComplete="new-password" placeholder="••••••••" autoCorrect="off" autoCapitalize="off" className="p-1 border rounded border-slate-400 outline-none focus:border-blue-600 text-slate-900" value={password} onChange={(e) => { clearFeedbackErrors(e.target.id); setPassword(e.target.value); }} />
+                            { validations.find((validation) => {return validation.field === "password"}).message !== "" ? <p className="text-red-600">{validations.find((validation) => {return validation.field === "password"}).message}</p> : null }
                         </div>
-                        <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white hover:cursor-pointer" type="submit">Send Verification</button>
+                        <div className="flex flex-col gap-y-1">
+                            <label htmlFor="repassword">Repeat Password</label>
+                            <input required type="password" id="repassword" autoComplete="new-password" placeholder="••••••••" autoCorrect="off" autoCapitalize="off" className="p-1 border rounded border-slate-400 outline-none focus:border-blue-600 text-slate-900" value={repassword} onChange={(e) => { clearFeedbackErrors(e.target.id); setRepassword(e.target.value); }} />
+                            { validations.find((validation) => {return validation.field === "repassword"}).message !== "" ? <p className="text-red-600">{validations.find((validation) => {return validation.field === "repassword"}).message}</p> : null }
+                        </div>
+                        <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white hover:cursor-pointer" type="submit">Change Password</button>
                     </form>
                 : null }
             </div>

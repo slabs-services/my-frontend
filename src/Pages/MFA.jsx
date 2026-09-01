@@ -3,7 +3,7 @@ import { useComponentContext } from "../Contexts/ComponentContext";
 import PageWrapper from "../Components/PageWrapper";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { updateAlert } from "../Utils";
+import { updateAlert, updateValidation } from "../Utils";
 import { FaArrowLeft, FaCheckCircle, FaCopy } from "react-icons/fa";
 import QRCode from "react-qr-code";
 import { IoReload } from "react-icons/io5";
@@ -99,22 +99,31 @@ export default function MFAChange() {
             updateValidation(setValidations, validation.field, "");
         });
 
-        const changeEmail = new URL(
-            "/changeEmail",
+        const changeMFA = new URL(
+            "/validateMFA",
             import.meta.env.VITE_MY_API_URL
         );
 
         try {
-            const response = await fetch(changeEmail, {
+            const response = await fetch(changeMFA, {
                 method: 'POST',
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    code: otpCode
+                    mfaCode: otpCode
                 })
             });
+
+            if (response.status === 502) {
+                updateAlert(setAlert, "severity", 3);
+                updateAlert(setAlert, "showAlert", true);
+                updateAlert(setAlert, "message", "My service is temporarily unavailable.");
+                setIsLoading(false);
+                setIsInitialized(true);
+                return;
+            }
 
             try {
                 const data = await response.json();
@@ -147,7 +156,7 @@ export default function MFAChange() {
         }catch(e){
             updateAlert(setAlert, "severity", 3);
             updateAlert(setAlert, "showAlert", true);
-            updateAlert(setAlert, "message", "Authentication service is temporarily unavailable.");
+            updateAlert(setAlert, "message", "My service is temporarily unavailable.");
             setIsLoading(false);
             return;
         }

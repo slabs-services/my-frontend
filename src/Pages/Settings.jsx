@@ -4,7 +4,7 @@ import PageWrapper from "../Components/PageWrapper";
 import { useNavigate } from "react-router-dom";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { TbPasswordFingerprint } from "react-icons/tb";
-import { MdAlternateEmail } from "react-icons/md";
+import { MdAlternateEmail, MdOutlineDisabledByDefault } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { GoPasskeyFill } from "react-icons/go";
 import { useEffect } from "react";
@@ -31,7 +31,7 @@ export default function Settings() {
                             <div className="p-4 bg-white shadow flex flex-col justify-center items-center gap-y-2">
                                 <RiLockPasswordFill className="w-24 h-24 text-zinc-700" />
                                 <p className="text-zinc-700">Change Password</p>
-                                <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white hover:cursor-pointer w-full" onClick={() => {  }}>Change</button>
+                                <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white hover:cursor-pointer w-full" onClick={() => { navigate("/change-password"); }}>Change</button>
                             </div>
                             <div className="p-4 bg-white shadow flex flex-col justify-center items-center gap-y-2">
                                 <TbPasswordFingerprint className="w-24 h-24 text-zinc-700" />
@@ -46,7 +46,12 @@ export default function Settings() {
                             <div className="p-4 bg-white shadow flex flex-col justify-center items-center gap-y-2">
                                 <FaUser className="w-24 h-24 text-zinc-700" />
                                 <p className="text-zinc-700">Change User Info</p>
-                                <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white hover:cursor-pointer w-full" onClick={() => {  }}>Change</button>
+                                <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white hover:cursor-pointer w-full" onClick={() => { navigate("/change-basicinfo"); }}>Change</button>
+                            </div>
+                            <div className="p-4 bg-white shadow flex flex-col justify-center items-center gap-y-2">
+                                <MdOutlineDisabledByDefault className="w-24 h-24 text-zinc-700" />
+                                <p className="text-zinc-700">Disable Account</p>
+                                <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white hover:cursor-pointer w-full" onClick={() => { navigate("/disable-account"); }}>Disable</button>
                             </div>
                             <div className="p-4 bg-white shadow flex flex-col justify-center items-center gap-y-2">
                                 <GoPasskeyFill className="w-24 h-24 text-zinc-700" />

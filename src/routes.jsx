@@ -8,6 +8,9 @@ import Settings from "./Pages/Settings";
 import ChangeEmail from "./Pages/ChangeEmail";
 import ConfirmEmailChange from "./Pages/VerifyEmail";
 import MFAChange from "./Pages/MFA";
+import ChangePassword from "./Pages/ChangePassword";
+import ChangeUserInfo from "./Pages/ChangeUserInfo";
+import DisableAccount from "./Pages/DisableAccount";
 
 export default function Router(){
     return (
@@ -22,6 +25,9 @@ export default function Router(){
                         <Route path="/change-email" element={<ChangeEmail />} />
                         <Route path="/verify-email" element={<ConfirmEmailChange />} />
                         <Route path="/change-mfa" element={<MFAChange />} />
+                        <Route path="/change-password" element={<ChangePassword />} />
+                        <Route path="/change-basicinfo" element={<ChangeUserInfo />} />
+                        <Route path="/disable-account" element={<DisableAccount />} />
                     </Routes>
                 </AuthProvider>
             </ComponentProvider>
