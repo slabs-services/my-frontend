@@ -78,7 +78,7 @@ export default function OAuth() {
 
     return(
         <PageWrapper ignoreLocalAuth={true}>
-            <h1 className="text-3xl font-bold text-zinc-700">Email Verification</h1>
+            <h1 className="text-3xl font-bold text-zinc-700">Scopes Validation</h1>
             <div className="mt-6 w-125 gap-y-2 flex flex-col">
                 <AlertBox alert={alert} />
                 { !alert.hideContent ?

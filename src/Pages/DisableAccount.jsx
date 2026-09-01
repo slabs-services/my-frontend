@@ -5,10 +5,12 @@ import { updateAlert, updateValidation } from "../Utils";
 import { useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../Contexts/AuthContext";
 
 export default function DisableAccount() {
     const navigate = useNavigate();
     const { alert, setIsLoading, setAlert } = useComponentContext();
+    const { setIsAuthenticated } = useAuthContext();
     const [confirm, setConfirm] = useState("");
     const [validations, setValidations] = useState([
         {
@@ -77,7 +79,7 @@ export default function DisableAccount() {
                 updateAlert(setAlert, "message", data.message);
                 updateAlert(setAlert, "hideContent", true);
                 setIsLoading(false);
-
+                setIsAuthenticated(false);
             }catch(e){
                 updateAlert(setAlert, "severity", 3);
                 updateAlert(setAlert, "showAlert", true);

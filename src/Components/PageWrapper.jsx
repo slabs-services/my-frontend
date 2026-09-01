@@ -29,10 +29,10 @@ export default function PageWrapper({ children, ignoreLocalAuth = false }) {
                 <div className="w-2/3 flex justify-between">
                     <img src="/logo-big.svg" title="Logo" alt="Logo" className="h-6" />
                     { isAuthenticated ? <div className="flex gap-x-3 items-center">
-                        <p className="text-white opacity-80">{getFirstLastName(userInfo.name)}</p>
+                        <p className="text-white/80">{getFirstLastName(userInfo.name)}</p>
                         <Link to="/my" className="text-white">My Apps</Link>
                         <Link to="/settings" className="text-white">Settings</Link>
-                        <Link to="/" className="text-white">Log out</Link>
+                        <Link to="/logout" className="text-white">Log out</Link>
                     </div> : null }
                 </div>
             </div>

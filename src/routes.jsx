@@ -11,6 +11,7 @@ import MFAChange from "./Pages/MFA";
 import ChangePassword from "./Pages/ChangePassword";
 import ChangeUserInfo from "./Pages/ChangeUserInfo";
 import DisableAccount from "./Pages/DisableAccount";
+import Logout from "./Pages/Logout";
 
 export default function Router(){
     return (
@@ -28,6 +29,7 @@ export default function Router(){
                         <Route path="/change-password" element={<ChangePassword />} />
                         <Route path="/change-basicinfo" element={<ChangeUserInfo />} />
                         <Route path="/disable-account" element={<DisableAccount />} />
+                        <Route path="/logout" element={<Logout />} />
                     </Routes>
                 </AuthProvider>
             </ComponentProvider>
