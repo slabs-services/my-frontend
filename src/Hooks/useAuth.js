@@ -57,9 +57,7 @@ export default function useAuth(){
             }
 
             setUserInfo(data);
-            updateAlert(setAlert, "hideContent", false);
             setIsAuthenticated(true);
-            setIsLoading(false);
         } catch (e) {
             updateAlert(setAlert, "severity", 3);
             updateAlert(setAlert, "showAlert", true);

@@ -6,6 +6,7 @@ import Apps from "./Pages/Apps";
 import OAuth from "./Pages/OAuth";
 import Settings from "./Pages/Settings";
 import ChangeEmail from "./Pages/ChangeEmail";
+import ConfirmEmailChange from "./Pages/VerifyEmail";
 
 export default function Router(){
     return (
@@ -18,6 +19,7 @@ export default function Router(){
                         <Route path="/oauth" element={<OAuth />} />
                         <Route path="/settings" element={<Settings />} />
                         <Route path="/change-email" element={<ChangeEmail />} />
+                        <Route path="/verify-email" element={<ConfirmEmailChange />} />
                     </Routes>
                 </AuthProvider>
             </ComponentProvider>
