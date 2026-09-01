@@ -159,10 +159,10 @@ export default function ChangeEmail() {
                 <FaArrowLeft className="w-6 h-6 text-zinc-700 hover:cursor-pointer" onClick={() => { navigate("/settings"); }} />
                 <h1 className="text-3xl font-bold text-zinc-700">Change Email</h1>
             </div>
-            <div className="mt-6 w-125 gap-y-2 flex flex-col">
-                <AlertBox alert={alert} />
+            <div className="mt-6 gap-y-2 flex flex-col p-4 bg-white shadow">
+                <AlertBox alert={alert} className="w-125" />
                 { !alert.hideContent ?
-                    <form className="flex flex-col gap-y-4" onSubmit={handleSubmit}>
+                    <form className="flex flex-col gap-y-4 w-125" onSubmit={handleSubmit}>
                         <p>Do you want to change your email? Let's start</p>
                         <div className="flex flex-col gap-y-1">
                             <label htmlFor="email">New Email address</label>

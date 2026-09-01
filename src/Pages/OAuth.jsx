@@ -79,7 +79,7 @@ export default function OAuth() {
     return(
         <PageWrapper ignoreLocalAuth={true}>
             <h1 className="text-3xl font-bold text-zinc-700">Scopes Validation</h1>
-            <div className="mt-6 w-125 gap-y-2 flex flex-col">
+            <div className="mt-6 gap-y-2 flex flex-col p-4 bg-white shadow">
                 <AlertBox alert={alert} />
                 { !alert.hideContent ?
                     <h1 className="text-3xl font-bold text-zinc-700">We will redirect you in a moment</h1>

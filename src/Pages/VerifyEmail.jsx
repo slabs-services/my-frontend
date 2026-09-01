@@ -82,7 +82,7 @@ export default function ConfirmEmailChange() {
     return(
         <PageWrapper ignoreLocalAuth={true}>
             <h1 className="text-3xl font-bold text-zinc-700">Email Verification</h1>
-            <div className="mt-6 w-125 gap-y-2 flex flex-col">
+            <div className="mt-6 gap-y-2 flex flex-col p-4 bg-white shadow">
                 <AlertBox alert={alert} />
                 { !alert.hideContent ?
                     <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white hover:cursor-pointer" onClick={() => { navigate("/my"); }}>Go to My Account</button>

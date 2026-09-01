@@ -186,10 +186,10 @@ export default function MFAChange() {
                 <FaArrowLeft className="w-6 h-6 text-zinc-700 hover:cursor-pointer" onClick={() => { navigate("/settings"); }} />
                 <h1 className="text-3xl font-bold text-zinc-700">Change MFA</h1>
             </div>
-            <div className="mt-6 gap-y-2 flex flex-col w-125">
-                <AlertBox alert={alert} />
+            <div className="mt-6 gap-y-2 flex flex-col p-4 bg-white shadow">
+                <AlertBox alert={alert} className="w-125" />
                 { !alert.hideContent ?
-                    <form className="flex flex-col gap-y-4" onSubmit={handleSubmit}>
+                    <form className="flex flex-col gap-y-4 w-125" onSubmit={handleSubmit}>
                         <p>1. Do you want to change your MFA Device? Let's start scanning the QRCode bellow. You can scan the QR code below using an app such as <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank" className="hover:text-blue-800 text-blue-700 font-bold">Google Authenticator</a> or <a href="https://play.google.com/store/apps/details?id=com.azure.authenticator" target="_blank" className="hover:text-blue-800 text-blue-700 font-bold">Microsoft Authenticator</a>.</p>
                         <QRCode value={mfaQRCode} level="H" size={150} />
                         <div className="flex flex-col gap-y-1">
