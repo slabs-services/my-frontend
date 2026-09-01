@@ -36,7 +36,7 @@ export default function Settings() {
                             <div className="p-4 bg-white shadow flex flex-col justify-center items-center gap-y-2">
                                 <TbPasswordFingerprint className="w-24 h-24 text-zinc-700" />
                                 <p className="text-zinc-700">Change MFA</p>
-                                <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white hover:cursor-pointer w-full" onClick={() => {  }}>Change</button>
+                                <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white hover:cursor-pointer w-full" onClick={() => { navigate("/change-mfa"); }}>Change</button>
                             </div>
                             <div className="p-4 bg-white shadow flex flex-col justify-center items-center gap-y-2">
                                 <MdAlternateEmail className="w-24 h-24 text-zinc-700" />

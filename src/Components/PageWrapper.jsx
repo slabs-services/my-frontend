@@ -7,7 +7,7 @@ import { getFirstLastName } from "../Utils";
 
 export default function PageWrapper({ children, ignoreLocalAuth = false }) {
     const { getUserInfo, userInfo, isAuthenticated } = useAuthContext();
-    const { isLoading } = useComponentContext();
+    const { isLoading, modal } = useComponentContext();
 
     useEffect(() => {
         if(!ignoreLocalAuth){
@@ -17,6 +17,11 @@ export default function PageWrapper({ children, ignoreLocalAuth = false }) {
 
     return (
         <div className="bg-gray-50 w-full h-full absolute flex items-center flex-col font-roboto">
+            { modal ? <div className="w-full h-full absolute bg-black/50 flex items-center justify-center">
+                <div className="shadow bg-white rounded overflow-hidden">
+                    { modal }
+                </div>
+            </div> : null }
             { isLoading ? <div className="w-full h-full absolute bg-black/50 flex items-center justify-center">
                 <img src="/loading.svg" title="Loading" alt="Loading" className="w-16 animate-spin" />
             </div> : null }
