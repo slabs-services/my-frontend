@@ -30,6 +30,7 @@ export default function useAuth(){
             if (response.status === 502) {
                 updateAlert(setAlert, "severity", 3);
                 updateAlert(setAlert, "showAlert", true);
+                updateAlert(setAlert, "hideContent", true);
                 updateAlert(setAlert, "message", "My service is temporarily unavailable.");
                 return;
             }
@@ -41,6 +42,7 @@ export default function useAuth(){
             } catch (e) {
                 updateAlert(setAlert, "severity", 3);
                 updateAlert(setAlert, "showAlert", true);
+                updateAlert(setAlert, "hideContent", true);
                 updateAlert(setAlert, "message", "Unknown Error");
                 return;
             }
@@ -55,6 +57,7 @@ export default function useAuth(){
         } catch (e) {
             updateAlert(setAlert, "severity", 3);
             updateAlert(setAlert, "showAlert", true);
+            updateAlert(setAlert, "hideContent", true);
             updateAlert(setAlert, "message", "Unable to connect to the my service.");
         }
     }
