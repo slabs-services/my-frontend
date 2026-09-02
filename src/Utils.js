@@ -33,3 +33,12 @@ export function getFirstLastName(name){
         return nameSplit[0] + " " + nameSplit[nameSplit.length-1];
     }
 }
+
+export function formatPTDate(date, withSeconds = false) {
+    return date.toLocaleDateString("pt-PT") + " " +
+        date.toLocaleTimeString("pt-PT", {
+            hour: "2-digit",
+            minute: "2-digit",
+            ...(withSeconds && { second: "2-digit" })
+        });
+}

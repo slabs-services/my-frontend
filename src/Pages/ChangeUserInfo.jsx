@@ -23,6 +23,9 @@ export default function ChangeUserInfo() {
         updateAlert(setAlert, "hideContent", false);
         updateAlert(setAlert, "showAlert", false);
         setIsLoading(false);
+    }, []);
+
+    useEffect(() => {
         setName(userInfo.name);
     }, [userInfo]);
 
@@ -47,7 +50,7 @@ export default function ChangeUserInfo() {
 
         try {
             const response = await fetch(changeBasicInfo, {
-                method: 'POST',
+                method: 'PATCH',
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
@@ -85,7 +88,7 @@ export default function ChangeUserInfo() {
                 updateAlert(setAlert, "severity", 1); 
                 updateAlert(setAlert, "showAlert", true);
                 updateAlert(setAlert, "message", data.message);
-                updateAlert(setAlert, "hideContent", true);
+                updateAlert(setAlert, "hideContent", false);
                 setIsLoading(false);
                 setUserInfo((lastInfo) => {
                     return {
@@ -93,6 +96,9 @@ export default function ChangeUserInfo() {
                         name
                     }
                 });
+                setTimeout(() => {
+                    updateAlert(setAlert, "showAlert", false);
+                }, 2000);
             }catch(e){
                 updateAlert(setAlert, "severity", 3);
                 updateAlert(setAlert, "showAlert", true);

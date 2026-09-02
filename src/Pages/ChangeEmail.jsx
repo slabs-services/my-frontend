@@ -130,8 +130,11 @@ export default function ChangeEmail() {
                 updateAlert(setAlert, "severity", 1); 
                 updateAlert(setAlert, "showAlert", true);
                 updateAlert(setAlert, "message", data.message);
-                updateAlert(setAlert, "hideContent", true);
+                updateAlert(setAlert, "hideContent", false);
                 setIsLoading(false);
+                setTimeout(() => {
+                    updateAlert(setAlert, "showAlert", false);
+                }, 2000);
             }catch(e){
                 updateAlert(setAlert, "severity", 3);
                 updateAlert(setAlert, "showAlert", true);

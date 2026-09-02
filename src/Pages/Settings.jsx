@@ -24,7 +24,7 @@ export default function Settings() {
         <PageWrapper>
             <h1 className="text-3xl font-bold text-zinc-700">Settings</h1>
             <div className="mt-6 gap-y-2 flex flex-col">
-                <AlertBox alert={alert} />
+                <AlertBox alert={alert} className="w-full" />
                 { !alert.hideContent ?
                     <>
                         <div class="grid grid-cols-4 gap-4">

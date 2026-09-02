@@ -17,7 +17,7 @@ export default function Apps() {
         <PageWrapper>
             <h1 className="text-3xl font-bold text-zinc-700">My Apps</h1>
             <div className="mt-6 gap-y-2 flex flex-col">
-                <AlertBox alert={alert} />
+                <AlertBox alert={alert} className="w-full" />
                 { !alert.hideContent ? <h1>Conteudo Teste</h1> : null }
             </div>
         </PageWrapper>

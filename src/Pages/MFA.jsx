@@ -106,7 +106,7 @@ export default function MFAChange() {
 
         try {
             const response = await fetch(changeMFA, {
-                method: 'POST',
+                method: 'PATCH',
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
@@ -146,6 +146,9 @@ export default function MFAChange() {
                 updateAlert(setAlert, "message", data.message);
                 updateAlert(setAlert, "hideContent", true);
                 setIsLoading(false);
+                setTimeout(() => {
+                    updateAlert(setAlert, "showAlert", false);
+                }, 2000);
             }catch(e){
                 updateAlert(setAlert, "severity", 3);
                 updateAlert(setAlert, "showAlert", true);
