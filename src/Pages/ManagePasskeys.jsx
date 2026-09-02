@@ -315,7 +315,7 @@ export default function ManagePasskeys() {
                                     {passkeysList.map((passkey) => (
                                         <tr key={passkey.srn} className="even:bg-slate-50">
                                             <td className="px-2 py-2 font-medium text-slate-900">{passkey.name}</td>
-                                            <td className="px-2 py-2 text-slate-500">{passkey.lastUsage ? formatPTDate(new Date(passkey.lastUsage)) : "-" }</td>
+                                            <td className="px-2 py-2 text-slate-500">{passkey.lastUsage ? formatPTDate(new Date(passkey.lastUsage), true) : "-" }</td>
                                             <td className="px-2 py-2 text-slate-500">{formatPTDate(new Date(passkey.createdAt), true)}</td>
                                             <td className="px-2 py-2 flex gap-3">
                                                 <button className="p-2 bg-slate-200 hover:bg-slate-300 hover:cursor-pointer rounded" onClick={() => { openPopupPasskeyEdit(passkey); }}>

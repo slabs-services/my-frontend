@@ -112,6 +112,23 @@ export default function DisableAccount() {
                 { !alert.hideContent ?
                     <form className="flex flex-col gap-y-4 w-125" onSubmit={handleSubmit}>
                         <p>Do you want to disable your account? Let's start</p>
+                        <div className="bg-red-50 border border-red-900 rounded p-4 shadow-xs text-red-900">
+                            <ul className="list-disc flex flex-col gap-y-1">
+                                <li className="ml-3">The user will no longer be able to sign in to SpaceLabs Cloud.</li>
+                                <li className="ml-3">All new authentication attempts will be rejected, including password, passkey, and other authentication methods.</li>
+                                <li className="ml-3">The user will no longer be able to authenticate through the IdP for applications that rely on this account.</li>
+                                <li className="ml-3">New SSO sessions cannot be created.</li>
+                                <li className="ml-3">Refresh tokens will be revoked, preventing the user from obtaining new access tokens.</li>
+                                <li className="ml-3">Active sessions will be terminated or revoked, where supported.</li>
+                                <li className="ml-3">Already-issued access tokens may remain valid until they expire, unless immediate token revocation or account-status validation is implemented.</li>
+                                <li className="ml-3">All passkeys and other authenticators associated with the account will become unusable.</li>
+                                <li className="ml-3">The account will be permanently disabled and cannot be re-enabled.</li>
+                                <li className="ml-3">The user's account data and identity will no longer be usable for authentication.</li>
+                                <li className="ml-3">Permissions, groups, and account configuration associated with the account will no longer grant access.</li>
+                                <li className="ml-3">Creating a new account with the same email address will create a completely new identity. It will not restore, reuse, or inherit the previous account, passkeys, sessions, permissions, or other account data.</li>
+                                <li className="ml-3">Applications must treat the new account as a different user, even if the email address is identical.</li>
+                            </ul>
+                        </div>
                         <div className="flex flex-col gap-y-1">
                             <label htmlFor="confirm">Confirmation</label>
                             <input required type="text" id="confirm" placeholder='Please digit "confirm" to disable your account' autoComplete="off" autoCorrect="off" autoCapitalize="off" className="p-1 border rounded border-slate-400 outline-none focus:border-blue-600 text-slate-900" value={confirm} onChange={(e) => { clearFeedbackErrors(e.target.id); setConfirm(e.target.value); }} />
