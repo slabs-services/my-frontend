@@ -25,7 +25,7 @@ export default function Logout() {
             <div className="mt-6 gap-y-2 flex flex-col p-4 bg-white shadow">
                 <AlertBox alert={alert} className="w-125" />
                 { !alert.hideContent ?
-                    <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white hover:cursor-pointer" onClick={() => { navigate("/my") }}>Log in again</button>
+                    <button className="bg-blue-600 hover:bg-blue-700 p-2 rounded text-white hover:cursor-pointer w-125" onClick={() => { navigate("/my") }}>Log in again</button>
                 : null }
             </div>
         </PageWrapper>

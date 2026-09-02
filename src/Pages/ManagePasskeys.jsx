@@ -282,7 +282,7 @@ export default function ManagePasskeys() {
     }
 
     function openPopupPasskeyDelete(passkey){
-        setModal(<ConfirmModal actionCancel={() => { setModal(null); }} actionConfirm={() => { DeletePasskeyConfirm(); }} contentText={"Are you sure you want to delete " + passkey.name + " passkey?"} headerText="Confirm Passkey Delete" />);
+        setModal(<ConfirmModal actionCancel={() => { setModal(null); }} actionConfirm={() => { DeletePasskeyConfirm(passkey); }} contentText={"Are you sure you want to delete " + passkey.name + " passkey?"} headerText="Confirm Passkey Delete" />);
     }
 
     function openPopupPasskeyEdit(passkey){
